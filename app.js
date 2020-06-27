@@ -24,7 +24,6 @@ const server = http.createServer ((req, res) => {
             const message = parsedBody.split('=')[1]
             fs.writeFileSync('message.txt' , message)
             res.statusCode = 302;
-            fs.writeFileSync('message.txt' , 'Mruad is here');
             res.setHeader('location', '/');
             return res.end();
         })
