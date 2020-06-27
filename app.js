@@ -12,6 +12,20 @@ const server = http.createServer ((req, res) => {
         return res.end()
     }
     if(url === '/message' && method === 'POST') {
+        const body = [];
+
+        req.on('data', (chunk) => {
+            console.log(chunk)
+            body.push(chunk)
+        });
+
+        req.on('end' , () => {
+            const parsedBody = Buffer.concat(body).toString();
+            const message = parsedBody.split('=')[1]
+            fs.writeFileSync('message.txt' , message)
+        })
+
+
         res.statusCode = 302;
         fs.writeFileSync('message.txt' , 'Mruad is here');
         res.setHeader('location', '/');
